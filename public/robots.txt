@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# EDIT ME: replace with the production domain after deployment
+Sitemap: https://faizankhan.dev/sitemap.xml
