@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# EDIT ME: replace with the production domain after deployment
-Sitemap: https://faizankhan.dev/sitemap.xml
+# Production domain — update if it changes
+Sitemap: https://job-portfolio-plum-chi.vercel.app/sitemap.xml

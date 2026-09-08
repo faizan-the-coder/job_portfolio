@@ -28,7 +28,7 @@ export const LINKS = {
   github: "https://github.com/faizan-the-coder",
   // ↓↓↓ EDIT ME — paste the real "Coding Lifestyle 4u" channel URL here
   youtube: "https://www.youtube.com/@codinglifestyle4u",
-  portfolio: "https://faizankhan.dev", // used by back-of-card QR caption
+  portfolio: "https://job-portfolio-plum-chi.vercel.app", // production URL — update if the domain changes
 } as const;
 
 export const YOUTUBE_CHANNEL_NAME = "Coding Lifestyle 4u";
