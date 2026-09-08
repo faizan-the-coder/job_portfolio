@@ -58,7 +58,7 @@ export function Navbar() {
         aria-label="Primary"
         className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-3 sm:pb-5"
       >
-        <div className="relative flex w-full max-w-xl items-center justify-between gap-1 rounded-2xl border border-white/10 bg-[#0d0d1b]/80 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-2xl sm:w-auto sm:gap-1 sm:rounded-full sm:px-2">
+        <div className="relative flex w-full max-w-xl items-center justify-between gap-0.5 rounded-2xl border border-white/10 bg-[#0d0d1b]/80 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-2xl sm:w-auto sm:gap-1 sm:rounded-full sm:px-2">
           {NAV_ITEMS.map((item) => {
             const Icon = iconFor(item.icon);
             const isActive = active === item.id;
@@ -68,7 +68,7 @@ export function Navbar() {
                 onClick={() => go(item.id)}
                 aria-current={isActive ? "true" : undefined}
                 aria-label={`Go to ${item.label}`}
-                className={`relative flex min-h-[48px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-2 py-1.5 text-[10px] font-semibold transition-colors sm:min-w-[76px] sm:flex-none sm:rounded-full sm:px-4 sm:text-[11px] ${
+                className={`relative flex min-h-[48px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 overflow-hidden rounded-xl px-1 py-1.5 text-[10px] font-semibold transition-colors sm:min-w-[76px] sm:flex-none sm:rounded-full sm:px-4 sm:text-[11px] ${
                   isActive ? "text-white" : "text-slate-400 hover:text-violet-200"
                 }`}
               >
@@ -79,8 +79,8 @@ export function Navbar() {
                     transition={{ type: "spring", stiffness: 420, damping: 34 }}
                   />
                 )}
-                <Icon className="relative h-[18px] w-[18px]" strokeWidth={2.2} aria-hidden />
-                <span className="relative tracking-wide">{item.label}</span>
+                <Icon className="relative h-[18px] w-[18px] shrink-0" strokeWidth={2.2} aria-hidden />
+                <span className="relative max-w-full truncate tracking-wide">{item.label}</span>
               </button>
             );
           })}

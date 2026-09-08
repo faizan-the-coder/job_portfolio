@@ -38,8 +38,16 @@ body {
   background-color: #08080f;
   color: #f4f2ff;
   font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Belt-and-braces horizontal containment for mobile browsers where
+   body-level overflow-x is buggy. `clip` creates no scroll container,
+   so nothing on the page can ever scroll sideways. No sticky
+   elements exist on this site, which `clip` would otherwise break. */
+html {
+  overflow-x: clip;
 }
 
 ::selection {
