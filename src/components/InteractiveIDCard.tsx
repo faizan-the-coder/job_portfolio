@@ -256,18 +256,13 @@ export function InteractiveIDCard() {
                         aria-hidden
                       />
                       <span className="safari-layer relative grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-200 via-violet-500 to-purple-800 p-[2.5px] shadow-[0_0_18px_rgba(139,92,246,0.45),0_6px_16px_rgba(0,0,0,0.5)]">
-                        <span className="relative block h-full w-full overflow-hidden rounded-full border border-[#151032] bg-gradient-to-b from-[#241d55] to-[#0b0b18]">
-                          {/* Reverted to the original 48px zoomed framing for looks;
-                              clarity comes from eager loading + no GPU translateZ
-                              raster on this tiny image (scale property still zooms).
-                              Backface-visibility from the class still guards the flip. */}
+                        <span className="relative grid h-full w-full place-items-center overflow-hidden rounded-full border border-[#151032] bg-gradient-to-b from-[#241d55] to-[#0b0b18]">
                           <img
                             src={PROFILE.photo}
                             alt=""
                             aria-hidden
-                            className="safari-layer block h-full w-full scale-[1.18] rounded-full object-cover object-[50%_22%]"
-                            style={{ transform: "none", WebkitTransform: "none" }}
-                            loading="eager"
+                            className="safari-layer h-full w-full scale-[1.4] rounded-full object-cover object-[50%_22%]"
+                            loading="lazy"
                             draggable={false}
                           />
                         </span>
