@@ -53,12 +53,15 @@ export function Navbar() {
         </a>
       </header>
 
-      {/* Floating bottom nav — pill on desktop, full-width bar on mobile */}
+      {/* Floating bottom nav — pill on desktop, full-width bar on mobile.
+          Flexible sizing so all 6 items stay inside at 320–414px:
+          zero gap + tighter padding/icons on the smallest screens,
+          tracking only where there is room, everything truncates. */}
       <nav
         aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-3 sm:pb-5"
+        className="fixed inset-x-0 bottom-0 z-40 flex min-w-0 justify-center px-2 pb-3 min-[380px]:px-3 sm:pb-5"
       >
-        <div className="relative flex w-full max-w-xl items-center justify-between gap-0.5 rounded-2xl border border-white/10 bg-[#0d0d1b]/80 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-2xl sm:w-auto sm:gap-1 sm:rounded-full sm:px-2">
+        <div className="relative flex w-full min-w-0 max-w-xl flex-nowrap items-stretch justify-between gap-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d1b]/80 p-1 min-[360px]:gap-0.5 min-[360px]:p-1.5 sm:w-auto sm:gap-1 sm:rounded-full sm:px-2">
           {NAV_ITEMS.map((item) => {
             const Icon = iconFor(item.icon);
             const isActive = active === item.id;
@@ -68,7 +71,7 @@ export function Navbar() {
                 onClick={() => go(item.id)}
                 aria-current={isActive ? "true" : undefined}
                 aria-label={`Go to ${item.label}`}
-                className={`relative flex min-h-[48px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 overflow-hidden rounded-xl px-1 py-1.5 text-[10px] font-semibold transition-colors sm:min-w-[76px] sm:flex-none sm:rounded-full sm:px-4 sm:text-[11px] ${
+                className={`relative flex min-h-[48px] min-w-0 flex-1 basis-0 flex-col items-center justify-center gap-[3px] overflow-hidden rounded-xl px-0.5 py-1.5 text-[9px] font-semibold transition-colors min-[360px]:px-1 min-[360px]:text-[10px] sm:min-w-[76px] sm:flex-none sm:rounded-full sm:px-4 sm:text-[11px] ${
                   isActive ? "text-white" : "text-slate-400 hover:text-violet-200"
                 }`}
               >
@@ -79,8 +82,14 @@ export function Navbar() {
                     transition={{ type: "spring", stiffness: 420, damping: 34 }}
                   />
                 )}
-                <Icon className="relative h-[18px] w-[18px] shrink-0" strokeWidth={2.2} aria-hidden />
-                <span className="relative max-w-full truncate tracking-wide">{item.label}</span>
+                <Icon
+                  className="relative h-4 w-4 shrink-0 min-[360px]:h-[18px] min-[360px]:w-[18px]"
+                  strokeWidth={2.2}
+                  aria-hidden
+                />
+                <span className="relative w-full max-w-full truncate text-center leading-tight tracking-normal min-[400px]:tracking-wide">
+                  {item.label}
+                </span>
               </button>
             );
           })}

@@ -6,7 +6,6 @@ import {
   useTransform,
   useMotionTemplate,
   useReducedMotion,
-  AnimatePresence,
 } from "framer-motion";
 import { Briefcase, FlipHorizontal2, MapPin, ShieldCheck } from "lucide-react";
 import { PROFILE } from "../data/portfolio";
@@ -128,7 +127,7 @@ export function InteractiveIDCard() {
           <div className="w-full">
             <motion.div
               className="preserve-3d relative mt-0 aspect-[1/1.45] w-full cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300"
-              style={{ transformStyle: "preserve-3d" }}
+              style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
               role="button"
               tabIndex={0}
               aria-pressed={flipped}
@@ -156,15 +155,21 @@ export function InteractiveIDCard() {
               <motion.div
                 animate={{ rotateY: flipped ? 180 : 0 }}
                 transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
                 className="preserve-3d relative h-full w-full"
               >
                 {/* ── FRONT ─────────────────────────── */}
                 <div
-                  className={`backface-hidden card-sheen ${CARD_FRAME} bg-gradient-to-b from-[#1b1440] via-[#120f2b] to-[#0a0a18]`}
+                  className={`backface-hidden flip-front card-sheen ${CARD_FRAME} bg-gradient-to-b from-[#1b1440] via-[#120f2b] to-[#0a0a18]`}
+                  style={{ WebkitBackfaceVisibility: "hidden", backfaceVisibility: "hidden" }}
                 >
-                  <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-violet-500/35 to-transparent" aria-hidden />
-                  <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-fuchsia-300 via-violet-500 to-indigo-600" aria-hidden />
-                  <motion.div className="absolute inset-0" style={reduce ? undefined : { background: glare }} aria-hidden />
+                  <div className="safari-layer absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-violet-500/35 to-transparent" aria-hidden />
+                  <div className="safari-layer absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-fuchsia-300 via-violet-500 to-indigo-600" aria-hidden />
+                  <motion.div
+                    className="safari-layer pointer-events-none absolute inset-0"
+                    style={reduce ? undefined : { background: glare }}
+                    aria-hidden
+                  />
 
                   <div className={CARD_BODY}>
                     <SlotHole />
@@ -178,20 +183,31 @@ export function InteractiveIDCard() {
                       </span>
                     </div>
 
-                    {/* transparent portrait — fluid height so it fills the
-                        card instead of leaving dead space */}
-                    <div className="relative mx-auto mt-1 min-h-[110px] w-full flex-1">
-                      <div className="absolute left-1/2 top-1/2 aspect-square h-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/30 blur-2xl" aria-hidden />
-                      <div className="absolute bottom-0 left-1/2 h-3 w-28 -translate-x-1/2 rounded-[100%] bg-black/60 blur-[7px]" aria-hidden />
-                      <img
-                        src={PROFILE.photo}
-                        alt={PROFILE.photoAlt}
-                        className="absolute inset-0 h-full w-full object-contain drop-shadow-[0_14px_20px_rgba(0,0,0,0.55)]"
-                        loading="eager"
+                    {/* premium circular portrait — centered, contained, violet glow.
+                        Fixed-size circle (flex-none) so there is no stretchy
+                        flex-1 gap between photo and name. Outer card size is
+                        still owned by aspect-[1/1.45]. No `filter: drop-shadow`
+                        on the img: filters create a separate Safari compositing
+                        layer that ignores the parent's backface-visibility. */}
+                    <div className="relative mx-auto mt-2 flex w-full flex-none items-center justify-center">
+                      <div
+                        className="safari-layer absolute left-1/2 top-1/2 aspect-square h-[148px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/30 blur-2xl sm:h-[162px]"
+                        aria-hidden
                       />
+                      <div className="safari-layer relative h-[148px] w-[148px] shrink-0 rounded-full bg-gradient-to-br from-violet-200 via-violet-500 to-purple-800 p-[3px] shadow-[0_0_28px_rgba(139,92,246,0.5),0_10px_24px_rgba(0,0,0,0.55),inset_0_1px_2px_rgba(255,255,255,0.4)] sm:h-[162px] sm:w-[162px]">
+                        <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-[#151032] bg-gradient-to-b from-[#241d55] to-[#0b0b18]">
+                          <img
+                            src={PROFILE.photo}
+                            alt={PROFILE.photoAlt}
+                            className="safari-layer h-full w-full scale-[1.18] rounded-full object-cover object-[50%_22%]"
+                            loading="eager"
+                            draggable={false}
+                          />
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="mt-1 text-center">
+                    <div className="mt-4 text-center">
                       <h3 className="text-[24px] font-extrabold tracking-tight text-white">FAIZAN KHAN</h3>
                       <p className="mt-1 text-[13px] font-semibold text-violet-200">
                         {PROFILE.title} • {PROFILE.subtitle}
@@ -219,27 +235,42 @@ export function InteractiveIDCard() {
                 {/* ── BACK — same CARD_FRAME, pre-rotated 180°. ── */}
                 <div
                   className={`backface-hidden rotate-y-180 ${CARD_FRAME} bg-gradient-to-b from-[#171233] via-[#100d26] to-[#0a0a18]`}
+                  style={{ WebkitBackfaceVisibility: "hidden", backfaceVisibility: "hidden" }}
                 >
-                  <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-fuchsia-500/25 to-transparent" aria-hidden />
-                  <div className="absolute inset-y-0 right-0 w-1.5 bg-gradient-to-b from-indigo-400 via-violet-500 to-fuchsia-400" aria-hidden />
-                  <motion.div className="absolute inset-0" style={reduce ? undefined : { background: glare }} aria-hidden />
+                  <div className="safari-layer absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-fuchsia-500/25 to-transparent" aria-hidden />
+                  <div className="safari-layer absolute inset-y-0 right-0 w-1.5 bg-gradient-to-b from-indigo-400 via-violet-500 to-fuchsia-400" aria-hidden />
+                  <motion.div
+                    className="safari-layer pointer-events-none absolute inset-0"
+                    style={reduce ? undefined : { background: glare }}
+                    aria-hidden
+                  />
                   <div className={`${CARD_BODY} text-left`}>
                     <SlotHole />
 
-                    {/* identity header — glow echoes the front portrait */}
+                    {/* identity header — same premium ring language as the front
+                        portrait (gradient ring + violet glow + contained cover),
+                        sized for the header row so the card keeps its exact size */}
                     <div className="relative mt-2 flex items-center gap-2.5">
                       <div
-                        className="absolute top-1/2 left-8 h-16 w-28 -translate-y-1/2 rounded-full bg-violet-500/25 blur-xl"
+                        className="safari-layer absolute top-1/2 left-7 h-14 w-24 -translate-y-1/2 rounded-full bg-violet-500/25 blur-xl"
                         aria-hidden
                       />
-                      <span className="relative grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full border border-violet-300/40 bg-gradient-to-b from-violet-500/50 to-[#171233] shadow-lg shadow-violet-950/50">
-                        <img
-                          src={PROFILE.photo}
-                          alt=""
-                          aria-hidden
-                          className="h-full w-full object-cover object-top"
-                          loading="lazy"
-                        />
+                      <span className="safari-layer relative grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-200 via-violet-500 to-purple-800 p-[2.5px] shadow-[0_0_18px_rgba(139,92,246,0.45),0_6px_16px_rgba(0,0,0,0.5)]">
+                        <span className="relative block h-full w-full overflow-hidden rounded-full border border-[#151032] bg-gradient-to-b from-[#241d55] to-[#0b0b18]">
+                          {/* Reverted to the original 48px zoomed framing for looks;
+                              clarity comes from eager loading + no GPU translateZ
+                              raster on this tiny image (scale property still zooms).
+                              Backface-visibility from the class still guards the flip. */}
+                          <img
+                            src={PROFILE.photo}
+                            alt=""
+                            aria-hidden
+                            className="safari-layer block h-full w-full scale-[1.18] rounded-full object-cover object-[50%_22%]"
+                            style={{ transform: "none", WebkitTransform: "none" }}
+                            loading="eager"
+                            draggable={false}
+                          />
+                        </span>
                       </span>
                       <span className="min-w-0">
                         <span className="block text-[8.5px] font-bold tracking-[0.3em] text-violet-300">
@@ -325,25 +356,6 @@ export function InteractiveIDCard() {
           </div>
         </motion.div>
       </motion.div>
-
-      {/* flip hint — the badge itself flips on tap/click */}
-      <div className="mt-2 flex flex-col items-center gap-1.5" aria-live="polite">
-        <p className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[11px] font-semibold tracking-wide text-slate-300">
-          <FlipHorizontal2 className="h-3.5 w-3.5 text-violet-300" aria-hidden />
-          Tap the badge to flip
-        </p>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={flipped ? "back" : "front"}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            className="min-h-[16px] font-mono text-[11px] tracking-wider text-slate-400"
-          >
-            {flipped ? "◉ BACK — about me" : "◎ FRONT — employee badge"}
-          </motion.p>
-        </AnimatePresence>
-      </div>
 
       {/* parallax dust behind card */}
       <motion.div

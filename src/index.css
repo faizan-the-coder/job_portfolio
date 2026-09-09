@@ -75,19 +75,42 @@ html {
   border: 2px solid #0b0b16;
 }
 
-/* Card 3D helpers */
+/* Card 3D helpers — Safari/iOS-safe.
+   Every filtered layer (blur / drop-shadow) needs its own
+   backface-visibility, otherwise Safari composites it above the
+   opposite face during the flip. translateZ separates the two
+   faces so neither z-fights nor bleeds through. */
 .perspective-1600 {
+  -webkit-perspective: 1600px;
   perspective: 1600px;
 }
 .preserve-3d {
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
 .backface-hidden {
-  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+/* Front face sits 1px toward the viewer so it wins depth testing
+   while facing forward and hides cleanly once rotated away. */
+.flip-front {
+  -webkit-transform: translateZ(1px);
+  transform: translateZ(1px);
 }
 .rotate-y-180 {
-  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg) translateZ(1px);
+  transform: rotateY(180deg) translateZ(1px);
+}
+/* Inner glow / glare / portrait layers: keep them glued to their own
+   face in Safari's GPU compositor. */
+.safari-layer {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* Dot grid + noise */
@@ -150,6 +173,8 @@ html {
   background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.14), transparent);
   animation: shine-line 5.5s ease-in-out infinite;
   pointer-events: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Hide scrollbars for chip rails */
