@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Production domain — update if it changes
-Sitemap: https://job-portfolio-plum-chi.vercel.app/sitemap.xml
+Sitemap: https://faizan-devfolio.vercel.app/sitemap.xml
