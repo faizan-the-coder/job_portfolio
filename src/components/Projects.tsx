@@ -188,25 +188,20 @@ export function Projects() {
                     </span>
                   ))}
                 </div>
-                {!open.liveUrl && !open.githubUrl && (
-                  <p className="mt-4 rounded-2xl border border-dashed border-white/20 bg-white/5 p-3 text-xs leading-relaxed text-slate-400">
-                    Links live here — add a real <code className="font-mono text-violet-200">githubUrl</code>{" "}
-                    / <code className="font-mono text-violet-200">liveUrl</code> in{" "}
-                    <code className="font-mono text-violet-200">src/data/portfolio.ts</code>.
-                  </p>
+                {(open.liveUrl || open.githubUrl) && (
+                  <div className="mt-5 flex gap-2">
+                    {open.liveUrl && (
+                      <a href={open.liveUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-4 text-xs font-bold text-[#14101f]">
+                        Live Demo <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                      </a>
+                    )}
+                    {open.githubUrl && (
+                      <a href={open.githubUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-full border border-white/15 px-4 text-xs font-bold text-white">
+                        <Github className="h-4 w-4" aria-hidden /> GitHub
+                      </a>
+                    )}
+                  </div>
                 )}
-                <div className="mt-5 flex gap-2">
-                  {open.liveUrl && (
-                    <a href={open.liveUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-4 text-xs font-bold text-[#14101f]">
-                      Live Demo <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-                    </a>
-                  )}
-                  {open.githubUrl && (
-                    <a href={open.githubUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-full border border-white/15 px-4 text-xs font-bold text-white">
-                      <Github className="h-4 w-4" aria-hidden /> GitHub
-                    </a>
-                  )}
-                </div>
               </motion.div>
             </motion.div>
           )}
