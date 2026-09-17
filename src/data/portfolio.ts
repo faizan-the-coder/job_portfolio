@@ -225,7 +225,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
 export type Project = {
   slug: string;
   title: string;
-  category: "Python" | "Tkinter" | "React" | "SAP UI5" | "Pfizer";
+  category: "Full Stack" | "Python" | "Machine Learning" | "Game" | "React" | "SAP UI5" | "Pfizer";
   description: string;
   longDescription: string;
   stack: string[];
@@ -243,26 +243,116 @@ export type Project = {
 // just add `githubUrl` / `liveUrl` to the entry — the buttons appear automatically.
 export const PROJECTS: Project[] = [
   {
-    slug: "python-tutorial-projects",
-    title: "Python Tutorial Projects",
-    category: "Python",
-    description: "Beginner-friendly Python projects taught step-by-step on the Coding Lifestyle 4u YouTube channel.",
+    slug: "employee-management-fullstack",
+    title: "Employee Management Full Stack",
+    category: "Full Stack",
+    description:
+      "Employee records web app with separate HR and employee dashboards, JWT authentication and protected routes.",
     longDescription:
-      "Hands-on Python mini-projects — CLI apps, file utilities and automation scripts — built live in tutorials for first-time programmers. Each project is kept small, readable and easy to extend.",
-    stack: ["Python", "CLI", "YouTube"],
-    gradient: "from-violet-600 via-purple-600 to-indigo-700",
-    icon: "terminal",
+      "React (Vite) frontend talking to a Flask REST backend. HR users manage employee records while employees get their own dashboard; routes are guarded with JWT and passwords are hashed with Flask-Bcrypt. Data is persisted through Flask-SQLAlchemy.",
+    stack: ["React", "Flask", "SQLite", "JWT"],
+    gradient: "from-indigo-600 via-violet-600 to-purple-800",
+    icon: "app-window",
+    githubUrl: "https://github.com/faizan-the-coder/employee-management-fullstack",
+    thumbnail: "/thumbs/employee-management.png",
   },
   {
-    slug: "tkinter-desktop-apps",
-    title: "Tkinter Desktop Apps",
-    category: "Tkinter",
-    description: "Desktop applications with Tkinter — forms, validation, lists and local persistence, taught for beginners.",
+    slug: "inventory-management-system",
+    title: "Inventory Management System",
+    category: "Python",
+    description:
+      "Desktop inventory system with role-based dashboards, billing with PDF invoices, stock tracking and purchase orders.",
     longDescription:
-      "Practical Tkinter walkthroughs from the channel: windows, widgets, event handling and layouts that turn scripts into usable desktop apps.",
-    stack: ["Python", "Tkinter", "Desktop"],
-    gradient: "from-fuchsia-600 via-purple-600 to-violet-800",
-    icon: "app-window",
+      "CustomTkinter desktop application backed by MySQL. Admins, employees and suppliers each get a tailored dashboard, covering product, category and supplier management, stock adjustments, billing with PDF invoice export and purchase orders. Sign-in supports email OTP verification.",
+    stack: ["Python", "CustomTkinter", "MySQL", "PDF invoices"],
+    gradient: "from-violet-600 via-purple-700 to-indigo-900",
+    icon: "monitor",
+    githubUrl: "https://github.com/faizan-the-coder/inventory-management-system",
+    thumbnail: "/thumbs/inventory-management.png",
+  },
+  {
+    slug: "clinic-management-advanced",
+    title: "Clinic Management Advanced",
+    category: "Python",
+    description:
+      "Clinic desktop application for patients, doctors and appointments, with billing that produces QR-coded PDF invoices.",
+    longDescription:
+      "Tkinter/ttk application over MySQL, with tables for doctors, patients, appointments, medicines, prescriptions and bills. Includes a dashboard, patient and doctor management, appointment scheduling, and a billing module that renders PDF invoices with a UPI QR code. Passwords are hashed with bcrypt.",
+    stack: ["Python", "Tkinter", "MySQL", "QR / PDF"],
+    gradient: "from-fuchsia-600 via-purple-700 to-violet-900",
+    icon: "briefcase",
+    githubUrl: "https://github.com/faizan-the-coder/clinic-management-advanced",
+    thumbnail: "/thumbs/clinic-management.png",
+  },
+  {
+    slug: "face-recognition-attendance",
+    title: "Face Recognition Attendance",
+    category: "Machine Learning",
+    description:
+      "Attendance system that identifies students from a webcam feed, with sign-in handled by face verification.",
+    longDescription:
+      "Python desktop application using DeepFace/OpenCV for face recognition and MySQL for records. Covers student management, webcam-based attendance capture, attendance record views and Excel export via openpyxl.",
+    stack: ["Python", "OpenCV", "DeepFace", "MySQL"],
+    gradient: "from-purple-700 via-violet-700 to-indigo-900",
+    icon: "user",
+    githubUrl: "https://github.com/faizan-the-coder/face-recognition-attendance",
+    thumbnail: "/thumbs/face-recognition-attendance.png",
+  },
+  {
+    slug: "cyberbullying-detection-ml",
+    title: "Cyberbullying Detection ML",
+    category: "Machine Learning",
+    description:
+      "Text classifier that flags cyberbullying in social-media comments, served through a Gradio interface.",
+    longDescription:
+      "scikit-learn pipeline — TF-IDF (5,000 features) into logistic regression — trained on a labelled comment dataset, with accuracy reported on a held-out split. The Gradio interface takes a comment and returns a bullying / not-bullying flag, and each prediction is logged to SQLite.",
+    stack: ["Python", "scikit-learn", "TF-IDF", "Gradio"],
+    gradient: "from-violet-700 via-purple-800 to-slate-900",
+    icon: "sparkles",
+    githubUrl: "https://github.com/faizan-the-coder/cyberbullying-detection-ml",
+    thumbnail: "/thumbs/cyberbullying-detection.png",
+  },
+  {
+    slug: "bulk-email-sender",
+    title: "Bulk Email Sender",
+    category: "Python",
+    description:
+      "Desktop tool for sending emails to a recipient list, with attachments, saved SMTP profiles and a send history.",
+    longDescription:
+      "CustomTkinter application with separate single-email and bulk-campaign tabs. Recipients are imported from Excel/CSV by drag-and-drop, a reusable HTML template can be inserted into the body, attachments are queued per campaign, and every send is written to a history log. Light and dark themes.",
+    stack: ["Python", "CustomTkinter", "SMTP", "pandas"],
+    gradient: "from-indigo-600 via-violet-700 to-purple-900",
+    icon: "mail",
+    githubUrl: "https://github.com/faizan-the-coder/bulk-email-sender",
+    thumbnail: "/thumbs/bulk-email-sender.png",
+  },
+  {
+    slug: "space-shooter-game",
+    title: "Space Shooter Game",
+    category: "Game",
+    description:
+      "Arcade space shooter built with pygame — sprite-based ships, enemies and projectiles, with sound effects and background music.",
+    longDescription:
+      "Pygame game loop with sprite assets for the player ship, enemies and bullets, an on-screen score, collision-based explosions and audio for lasers and hits. Ships with a cx_Freeze script for building a Windows executable.",
+    stack: ["Python", "pygame", "Sprites", "Audio"],
+    gradient: "from-slate-800 via-indigo-800 to-violet-900",
+    icon: "atom",
+    githubUrl: "https://github.com/faizan-the-coder/space-shooter-game",
+    thumbnail: "/thumbs/space-shooter-game.png",
+  },
+  {
+    slug: "all-in-one-calculator",
+    title: "All-in-One Calculator",
+    category: "Python",
+    description:
+      "Desktop calculator with basic and scientific modes, saved calculation history, unit and currency conversion and a function plotter.",
+    longDescription:
+      "CustomTkinter interface with two calculation modes and history persisted to local JSON. Conversion covers temperature, number bases, general units and currency rates via forex-python, and a Matplotlib panel plots functions such as sine waves. Includes light and dark themes.",
+    stack: ["Python", "CustomTkinter", "NumPy", "Matplotlib"],
+    gradient: "from-violet-600 via-indigo-700 to-purple-900",
+    icon: "wrench",
+    githubUrl: "https://github.com/faizan-the-coder/all-in-one-calculator",
+    thumbnail: "/thumbs/all-in-one-calculator.png",
   },
   {
     slug: "flask-utilities-automation",

@@ -5,7 +5,7 @@ import { PROJECTS, type Project } from "../data/portfolio";
 import { iconFor } from "./icons";
 import { Reveal, SectionHeading } from "./ui";
 
-const FILTERS = ["All", "Python", "Tkinter", "React", "SAP UI5", "Pfizer"] as const;
+const FILTERS = ["All", "Full Stack", "Python", "Machine Learning", "Game", "React", "SAP UI5", "Pfizer"] as const;
 
 export function Projects() {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
@@ -34,7 +34,7 @@ export function Projects() {
         <SectionHeading
           eyebrow="Selected work"
           title="Project Showcase"
-          sub="Tutorial builds and enterprise work patterns — Python teaching, Tkinter, React, SAP UI5 and Flask."
+          sub="Personal and client projects — Python desktop apps, full-stack web, machine learning, games and enterprise front-end work."
         />
 
         <Reveal className="mb-8 flex flex-wrap items-center justify-center gap-2">
